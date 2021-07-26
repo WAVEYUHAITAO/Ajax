@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery发送AJAX请求</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <h2 class="page-header">jQuery发送AJAX请求</h2>
+    <button class="btn btn-primary">GET</button>
+    <button class="btn btn-danger">POST</button>
+    <button class="btn btn-info">通用型方法ajax</button>
+</div>
+<script>
+    $('button').eq(0).click(function (){
+        //第一个参数是请求地址，第二个是参数，第三个参数是响应值的操作，第四个参数是设置响应体数据类型
+        $.get('http://localhost:8000/jQuery-server',{a:100,b:200},function (data) {
+            console.log(data);
+        },'json')
+    })
+    $('button').eq(1).click(function (){
+        $.post('http://localhost:8000/jQuery-server',{a:100,b:200},function (data) {
+            console.log(data);
+        })
+    })
+    //jQuery通用方法发送ajax
+    $('button').eq(2).click(function () {
+        $.ajax({
+            //url
+            url:'http://localhost:8000/delay',
+            //参数
+            data:{a:100,b:200},
+            //请求类型
+            type:'GET',
+            //成功的回调
+            success: function (data){
+                console.log(data)
+            },
+            //失败的回调
+            error: function (data){
+                console.log('出错啦！')
+            },
+            //设置超时时间
+            timeout:7000,
+            //dataType:'json',
+            //头信息
+            headers:{
+                c:300,
+                d:400
+            }
+        })
+    })
+</script>
+</body>
+</html>

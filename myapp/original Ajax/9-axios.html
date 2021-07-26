@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>axios 发送 AJAX请求</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <style>
+        #result {
+            width: 200px;
+            height: 100px;
+            border: solid 1px #903;
+        }
+    </style>
+</head>
+<body>
+<button>GET</button>
+<button>POST</button>
+<button>AJAX</button>
+<div id="result"></div>
+<script>
+    const btns = document.querySelectorAll('button');
+    const result = document.getElementById('result');
+    //配置 baseURL
+    axios.defaults.baseURL = 'http://localhost:8000';
+    btns[0].onclick = function () {
+        //GET 请求
+        axios.get('/axios-server', {
+            //url参数
+            params: {
+                id: 100,
+                vip: 7
+            },
+            //请求头信息
+            headers: {
+                age: 20,
+                name: 'hito'
+            }
+        }).then(value => {
+            console.log(value.data);
+
+        });
+    }
+    btns[1].onclick = function () {
+        //GET 请求
+        axios.post('/axios-server', {
+            //请求体
+            username: 'admin',
+            password: 'admin'
+        }, {
+            //url参数
+            params: {
+                id: 100,
+                vip: 7
+            },
+            //请求头信息
+            headers: {
+                age: 20,
+                name: 'hito'
+            },
+
+
+        }).then(value => {
+            console.log(value.data);
+
+        });
+    }
+    btns[2].onclick = function () {
+        axios({
+            //请求方法
+            method:'POST',
+            //url
+            url:'/axios-server',
+            //url参数
+            params:{
+                vip:10,
+                level:30
+            },
+            //头信息
+            headers:{
+                a:100,
+                b:200
+            },
+            //请求体
+            data:{
+                username:'admin',
+                password:'admin'
+            }
+        }).then(response=>{
+            //响应状态码
+            console.log(response.status);
+            //响应状态字符串
+            console.log(response.statusText);
+            //响应头信息
+            console.log(response.headers);
+            //响应体
+            console.log(response.data);
+
+        })
+
+    }
+</script>
+</body>
+</html>

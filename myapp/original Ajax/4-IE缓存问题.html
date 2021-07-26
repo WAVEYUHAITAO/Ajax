@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IE缓存问题</title><style>
+  #result {
+    width: 200px;
+    height: 100px;
+    border: solid 1px #903;
+  }
+</style>
+
+</head>
+<body>
+<button>点击发送请求</button>
+<div id="result"></div>
+<script>
+  const btn = document.getElementsByTagName('button')[0];
+  const result= document.getElementById('result');
+  btn.onclick = function () {
+    const xhr = new XMLHttpRequest();
+    //这里在请求url后添加时间戳参数使每次请求地址不同从而每次都会重新向服务器请求而不是走本地缓存，解决IE缓存问题
+    xhr.open('GET','http://127.0.0.1:8000/ie?t='+Date.now());
+    xhr.send();
+    xhr.onreadystatechange = function () {
+        if(xhr.readyState ===4){
+            if(xhr.status>=200 && xhr.status<300){
+                result.innerHTML=xhr.response;
+            }
+        }
+    }
+  }
+
+</script>
+</body>
+</html>
